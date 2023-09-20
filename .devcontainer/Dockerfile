@@ -1,5 +1,4 @@
-ARG VARIANT=3-bullseye
-FROM mcr.microsoft.com/vscode/devcontainers/python:0-${VARIANT}
+FROM mcr.microsoft.com/devcontainers/python:1-3.11-bullseye
 
 ENV PYTHONUNBUFFERED 1
 
