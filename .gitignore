@@ -199,3 +199,8 @@ terraform.rc
 
 #credentials file
 credentials.json
+
+# Non code files
+audio/
+graphics/
+map/
