@@ -2,7 +2,7 @@
 
 import pygame
 import pygame_menu as pm
-from main import Game
+import sys
 
 pygame.init()
 
@@ -19,8 +19,6 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Main function of the program
-
-
 def main():
     # List that is displayed while selecting the graphics level
     graphics = [
@@ -46,7 +44,6 @@ def main():
     perspectives = [("FPP", "fpp"), ("TPP", "tpp")]
 
     # This function displays the currently selected options
-
     def printSettings():
         print("\n\n")
         # getting the data using "get_input_data" method of the Menu class
@@ -118,13 +115,15 @@ def main():
         clock_format="%d-%m-%y %H:%M:%S", title_format="Local Time : {0}"
     )
 
-    # 3 different buttons each with a different style and purpose
+    # Button to print the current settings
     settings.add.button(
         title="Print Settings",
         action=printSettings,
         font_color=WHITE,
         background_color=GREEN,
     )
+
+    # Button to reset settings to defaults
     settings.add.button(
         title="Restore Defaults",
         action=settings.reset_value,
@@ -134,30 +133,8 @@ def main():
     settings.add.button(
         title="Return To Main Menu", action=pm.events.BACK, align=pm.locals.ALIGN_CENTER
     )
-
-    # Creating the main menu
-    mainMenu = pm.Menu(
-        title="Main Menu", width=WIDTH, height=HEIGHT, theme=pm.themes.THEME_GREEN
-    )
-
-    # Adjusting the default values
-    mainMenu._theme.widget_alignment = pm.locals.ALIGN_CENTER
-
-    # Button that takes to the settings menu when clicked
-    mainMenu.add.button(
-        title="Settings", action=settings, font_color=WHITE, background_color=GREEN
-    )
-
-    # An empty label that is used to add a seperation between the two buttons
-    mainMenu.add.label(title="")
-
-    # Exit button that is used to terminate the program
-    mainMenu.add.button(
-        title="Exit", action=pm.events.EXIT, font_color=WHITE, background_color=RED
-    )
-
-    # Lets us loop the main menu on the screen
-    mainMenu.mainloop(screen)
+    # Let us loop the settings menu on the screen
+    settings.mainloop(screen)
 
 
 if __name__ == "__main__":
