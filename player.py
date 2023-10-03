@@ -2,6 +2,8 @@ import pygame
 from settings import *
 from support import import_folder
 from entity import Entity
+import settings_menu
+import sys
 
 class Player(Entity):
 	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_attack,create_magic):
@@ -88,7 +90,7 @@ class Player(Entity):
 				self.direction.x = 0
 
 			# attack input 
-			if keys[pygame.K_SPACE]:
+			if keys[pygame.K_f]:
 				self.attacking = True
 				self.attack_time = pygame.time.get_ticks()
 				self.create_attack()
@@ -124,6 +126,9 @@ class Player(Entity):
 					self.magic_index = 0
 
 				self.magic = list(magic_data.keys())[self.magic_index]
+			
+			if keys[pygame.K_ESCAPE] or keys[pygame.K_p]:
+				settings_menu.main()
 
 	def get_status(self):
 
