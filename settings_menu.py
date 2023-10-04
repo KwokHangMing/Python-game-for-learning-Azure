@@ -3,6 +3,8 @@
 import pygame
 import pygame_menu as pm
 import sys
+from main import Game
+import start_menu
 
 pygame.init()
 
@@ -42,6 +44,8 @@ def main():
 
     # List that is displayed while selecting the player's perspective
     perspectives = [("FPP", "fpp"), ("TPP", "tpp")]
+
+    in_game = False
 
     # This function displays the currently selected options
     def printSettings():
@@ -130,8 +134,24 @@ def main():
         font_color=WHITE,
         background_color=RED,
     )
+
+    def returnToMainMenu():
+        nonlocal in_game
+        if in_game:
+            # Return to the game
+            print("Returning to the game...")
+            # Add your game code here
+            pass
+            in_game = False
+        else:
+            # Return to the start menu
+            print("Returning to the start menu...")
+            # Add your start menu code here
+            start_menu.main()
+            in_game = True
+
     settings.add.button(
-        title="Return To Main Menu", action=pm.events.BACK, align=pm.locals.ALIGN_CENTER
+        title="Return To Main Menu", action=returnToMainMenu, align=pm.locals.ALIGN_CENTER
     )
     # Let us loop the settings menu on the screen
     settings.mainloop(screen)

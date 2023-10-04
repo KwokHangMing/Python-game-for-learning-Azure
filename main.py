@@ -1,5 +1,6 @@
-import pygame, sys
+import pygame, sys	
 from settings import *
+import settings_menu
 from level import Level
 
 class Game:
@@ -28,6 +29,9 @@ class Game:
 					if event.key == pygame.K_m:
 						self.level.toggle_menu()
 
+					if event.key == pygame.K_ESCAPE:
+						settings_menu.main()
+						
 			self.screen.fill(WATER_COLOR)
 			self.level.run()
 			pygame.display.update()
