@@ -22,14 +22,6 @@ WHITE = (255, 255, 255)
 
 # Main function of the program
 def main():
-    # List that is displayed while selecting the graphics level
-    graphics = [
-        ("Low", "low"),
-        ("Medium", "medium"),
-        ("High", "high"),
-        ("Ultra High", "ultra high"),
-    ]
-
     # List that is displayed while selecting the window resolution level
     resolution = [
         ("1920x1080", "1920x1080"),
@@ -70,12 +62,6 @@ def main():
     settings.add.text_input(title="User Name : ", textinput_id="username")
 
     # 2 different Drop-downs to select the graphics level and the resolution level
-    settings.add.dropselect(
-        title="Graphics Level",
-        items=graphics,
-        dropselect_id="graphics level",
-        default=0,
-    )
     settings.add.dropselect_multiple(
         title="Window Resolution",
         items=resolution,
@@ -137,23 +123,30 @@ def main():
 
     def returnToMainMenu():
         nonlocal in_game
-        if in_game:
-            # Return to the game
-            print("Returning to the game...")
-            # Add your game code here
-            pass
-            in_game = False
-        else:
-            # Return to the start menu
-            print("Returning to the start menu...")
-            # Add your start menu code here
-            start_menu.main()
-            in_game = True
+        in_game = False
+        # Return to the start menu
+        print("Returning to the start menu...")
+        # Add your start menu code here
+        return start_menu.main()
 
     settings.add.button(
-        title="Return To Main Menu", action=returnToMainMenu, align=pm.locals.ALIGN_CENTER
+        title="Return To Main Menu",
+        action=returnToMainMenu,
+        align=pm.locals.ALIGN_CENTER,
     )
     # Let us loop the settings menu on the screen
+
+    def returnToGame():
+        nonlocal in_game
+        in_game = True
+        print("Returning to the game...")
+        return Game().run()
+        # Add your game code here
+
+    settings.add.button(
+        title="Return To Game", action=returnToGame, align=pm.locals.ALIGN_CENTER
+    )
+
     settings.mainloop(screen)
 
 
