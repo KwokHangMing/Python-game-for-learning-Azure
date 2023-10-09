@@ -39,7 +39,8 @@ resource "google_cloudfunctions_function" "npc_messages" {
   available_memory_mb               = 128
   source_archive_bucket             = google_storage_bucket.bucket.name
   source_archive_object             = google_storage_bucket_object.archive.name
-  entry_point                       = "print_npc_message"
+  entry_point                       = "npc_messages"
   trigger_http                      = true
   https_trigger_security_level      = "SECURE_ALWAYS"
+  ingress_settings = "ALLOW_ALL"
 }
