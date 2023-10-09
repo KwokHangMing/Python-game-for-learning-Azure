@@ -19,3 +19,27 @@ resource "google_storage_bucket" "bucket" {
   location = "US"
 }
 
+resource "google_storage_bucket_object" "npc_folder" {
+  name   = "NPC_messages/"
+  bucket = google_storage_bucket.bucket.name
+  content = "npc_folder"
+}
+
+resource "google_storage_bucket_object" "archive" {
+  name   = "NPC_messages/function-source.zip"
+  bucket = google_storage_bucket.bucket.name
+  source = "/workspaces/Python-game-for-learning-Azure/Google_cloud/functions.zip"
+}
+
+resource "google_cloudfunctions_function" "npc_messages" {
+  name        = "npc-messages"
+  description = "This function will send messages to the user"
+  runtime     = "python311"
+
+  available_memory_mb               = 128
+  source_archive_bucket             = google_storage_bucket.bucket.name
+  source_archive_object             = google_storage_bucket_object.archive.name
+  entry_point                       = "print_npc_message"
+  trigger_http                      = true
+  https_trigger_security_level      = "SECURE_ALWAYS"
+}
