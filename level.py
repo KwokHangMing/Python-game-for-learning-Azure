@@ -107,7 +107,7 @@ class Level:
                                 # 	self.add_exp)
                                 if col == "393":
                                     npc = NPC(
-                                        "npc_name",
+                                        "17",
                                         (x, y),
                                         [self.visible_sprites],
                                         self.obstacle_sprites,
