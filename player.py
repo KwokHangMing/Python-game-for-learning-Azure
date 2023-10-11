@@ -3,7 +3,7 @@ from settings import *
 from support import import_folder
 from entity import Entity
 import settings_menu
-import sys
+from chatbox import ChatBox
 
 class Player(Entity):
 	def __init__(self,pos,groups,obstacle_sprites,create_attack,destroy_attack,create_magic):
@@ -11,6 +11,8 @@ class Player(Entity):
 		self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
 		self.rect = self.image.get_rect(topleft = pos)
 		self.hitbox = self.rect.inflate(-6,HITBOX_OFFSET['player'])
+		self.obstacle_sprites = obstacle_sprites
+		self.chat_box = None
 
 		# graphics setup
 		self.import_player_assets()
@@ -20,7 +22,6 @@ class Player(Entity):
 		self.attacking = False
 		self.attack_cooldown = 400
 		self.attack_time = None
-		self.obstacle_sprites = obstacle_sprites
 
 		# weapon
 		self.create_attack = create_attack
@@ -129,6 +130,19 @@ class Player(Entity):
 			
 			if keys[pygame.K_ESCAPE] or keys[pygame.K_p]:
 				settings_menu.main()
+
+			if keys[pygame.K_RETURN]:
+            # Check if the player is colliding with an NPC
+				npc_group = pygame.sprite.Group()
+				player_collisions = pygame.sprite.spritecollide(self, npc_group, False)
+				if player_collisions:
+                # Interact with the first NPC in the collisions list
+					npc = player_collisions[0]
+					if npc.text is not None:
+						self.chat_box = ChatBox(npc.text)
+
+			if self.chat_box is not None:
+				self.chat_box.update()
 
 	def get_status(self):
 
