@@ -1,11 +1,19 @@
 # Assuming you have an NPC object called npc and a message string called message
-def npc_messages(request):
-    import json
+import vertexai
+from vertexai.language_models import TextGenerationModel
+def npc_messages(response):
 
-    request_json = request.get_json()
-    if request_json and 'text' in request_json:
-        text = request_json['text']
-        # Do something with the text, such as display it in a text box
-        return json.dumps({'success': text}), 200, {'ContentType': 'application/json'}
-    else:
-        return json.dumps({'success': False}), 400, {'ContentType': 'application/json'}
+    vertexai.init(project="final-year-project-400406", location="us-central1")
+    parameters = {
+        "candidate_count": 1,
+        "max_output_tokens": 1024,
+        "temperature": 0.2,
+        "top_p": 0.8,
+        "top_k": 40
+    }
+    model = TextGenerationModel.from_pretrained("text-bison")
+    response = model.predict(
+        """{npc} {message}""",
+        **parameters
+    )
+    print(f"Response from Model: {response.text}")
