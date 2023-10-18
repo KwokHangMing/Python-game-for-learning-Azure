@@ -45,7 +45,7 @@ resource "google_cloudfunctions_function" "npc_messages" {
   ingress_settings = "ALLOW_ALL"
 }
 
-resource "google_cloudfunctions_function_iam_member" "invoker" {
+resource "google_cloudfunctions_function_iam_member" "invoker_for_npc_messages" {
   project        = google_cloudfunctions_function.npc_messages.project
   region         = google_cloudfunctions_function.npc_messages.region
   cloud_function = google_cloudfunctions_function.npc_messages.name
